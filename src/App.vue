@@ -4,7 +4,7 @@
       <v-toolbar flat>
         <v-list>
           <v-list-tile>
-            <v-list-tile-title class="title">Tasks manager</v-list-tile-title>
+            <v-list-tile-title class="title">MTMS</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-toolbar>
@@ -12,7 +12,7 @@
       <v-divider></v-divider>
 
       <v-list dense class="pt-0">
-        <v-list-tile v-for="item in menu" :key="item.title" :to="item.path">
+        <v-list-tile v-for="item in menu" :key="item.title" :to="item.path" @click.stop="drawer = !drawer">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -88,12 +88,16 @@ export default {
   }
 }
 ::-webkit-scrollbar {
+  @media screen and (min-width: 560px){
   width: 5px;
   height: 5px;
   background-color: #ededed;
+  }
 }
 ::-webkit-scrollbar-thumb {
-  background: #666;
+  @media screen and (min-width: 560px){
+    background: #666;
+  }
 }
 </style>
 

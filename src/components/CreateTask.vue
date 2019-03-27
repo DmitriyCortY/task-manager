@@ -1,25 +1,31 @@
 <template>
   <div class="wrapper-tasks">
-    <label for="email">Маркер имени проекта</label>
-    <input v-model="markerName" type="text">
+    <label for="markerName">Маркер имени проекта</label>
+    <input id="markerName" v-model="markerName" type="text">
 
-    <label for="email">Маркер роли в проекте</label>
-    <input v-model="markerRole" type="text">
+    <label for="markerRole">Маркер роли в проекте</label>
+    <!-- <input id="markerRole" v-model="markerRole" type="text"> -->
+    <select  v-model="markerRole" style="text-transform: capitalize;" name="markerRole" id="markerRole">
+      <option value="layout" selected>Layout</option>
+      <option value="adversting">Adversting</option>
+      <option value="wordpress">Wordpress</option>
+      <option value="other">Other</option>
+    </select>
 
-    <label for="email">Заголовок проекта</label>
-    <input v-model="title" type="text">
+    <label for="title">Заголовок проекта</label>
+    <input id="title" v-model="title" type="text">
 
-    <label for="email">Описание проекта</label>
-    <textarea v-model="description"></textarea>
+    <label for="description">Описание проекта</label>
+    <textarea id="description" v-model="description"></textarea>
 
-    <label for="email">Стоимость проекта</label>
-    <input v-model="cost" type="number">
+    <label for="cost">Стоимость проекта</label>
+    <input id="cost" v-model="cost" type="number">
 
-    <label for="email">Валюта</label>
-    <select v-model="currency" name="select">
+    <!-- <label for="currency">Валюта</label>
+    <select id="currency" v-model="currency" name="select">
       <option value="грн" selected>грн</option>
       <option value="usd">usd</option>
-    </select>
+    </select> -->
     
     <button @click="newTask">Добавить задачу</button>
   </div>
@@ -31,11 +37,11 @@ export default {
     return {
       status: "inProcces",
       markerName: "",
-      markerRole: "",
+      markerRole: "layout",
       title: "",
       description: "",
       cost: "",
-      currency: "",
+      currency: "грн",
       payd: false,
       id: 12
     };
@@ -46,7 +52,7 @@ export default {
         this.markerName === "" ||
         this.markerNamarkerRoleme === "" ||
         this.title === "" ||
-        this.description === "" ||
+        // this.description === "" ||
         this.cost === "" ||
         this.currency === ""
       ) {

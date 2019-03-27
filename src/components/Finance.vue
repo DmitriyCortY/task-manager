@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="small">
+      <line-chart :chart-data="datacollection"></line-chart>
+    </div>
+    
     <div class="wrap">
       <div class="row row-total">
         <div class="row-title">Общая сума</div>
@@ -24,13 +28,20 @@
         <input v-model="endRange" type="date">
       </div>
     </div>
+
+    
   </div>
 </template>
 
 <script>
+import LineChart from '../store/LineChart.js'
 export default {
+  components: {
+      LineChart
+    },
   data() {
     return {
+      datacollection: null,
       startRange: "2019-01-01",
       endRange:
         new Date().getFullYear() +
@@ -42,8 +53,23 @@ export default {
         (new Date().getDate() + 1)
     };
   },
-
-  methods: {},
+  mounted () {
+      this.fillData()
+    },
+    methods: {
+      fillData () {
+        this.datacollection = {
+          labels: ['Оплачено', 'Не оплачено'],
+          datasets: [
+            {
+              label: 'Data One',
+              backgroundColor: ['#a7c9ad', '#da9393'],
+              data: [this.tasksPay, this.tasksNoPay]
+            }
+          ]
+        }
+      }
+    },
   computed: {
     tasksPay() {
       let tasks = this.$store.getters.tasks;
@@ -78,7 +104,17 @@ export default {
 };
 </script>
 
+
 <style lang="scss" scoped>
+.small {
+    max-width: 460px;
+    margin:  0 auto;
+    @media screen and (max-width: 560px){
+      max-width: 70vw;
+      width: 70vw;
+    }
+  }
+
 .wrap {
   max-width: 900px;
   margin: 0 auto;
@@ -100,6 +136,9 @@ export default {
   &:hover {
     transform: scale(1.005);
   }
+  @media screen and (max-width: 560px){
+    padding: 8px 10px;
+  }
 }
 .row-total {
   border: 2px solid #93dada;
@@ -113,10 +152,16 @@ export default {
 .row-title {
   font-weight: 600;
   font-size: 18px;
+  @media screen and (max-width: 560px){
+    font-size: 16px;
+  }
 }
 .row-cost {
   font-weight: 600;
   font-size: 16px;
+  @media screen and (max-width: 560px){
+    font-size: 14px;
+  }
   & span {
     font-size: 12px;
   }
@@ -141,6 +186,7 @@ export default {
     &:first-child {
       margin-right: 30px;
     }
+    
   }
 }
 .button {

@@ -369,8 +369,8 @@ export default {
   flex-direction: column;
   max-width: 360px;
   @media screen and (max-width: 560px) {
-    max-width: calc(100vw - 16px);
-    min-width: calc(100vw - 16px);
+    max-width: calc(90vw - 16px);
+    min-width: calc(90vw - 16px);
   }
   width: 100%;
   border-radius: 3px;
@@ -507,11 +507,18 @@ export default {
   font-size: 22px !important;
   font-weight: 700;
   margin-bottom: 0 !important;
+  @media screen and (max-width: 560px){
+    font-size: 18px !important;
+  }
 }
 .description {
   font-size: 18px !important;
   font-weight: 400;
   margin-bottom: 0 !important;
+  @media screen and (max-width: 560px){
+    font-size: 14px !important;
+    margin-top: -5px;
+  }
 }
 .markers {
   display: flex;
@@ -531,8 +538,12 @@ export default {
   user-select: none;
   text-align: center;
   width: 75px;
+  margin-bottom: 0;
   &:last-child {
     margin-right: 0;
+  }
+  @media screen and (max-width: 560px){
+    width: 100%;
   }
 }
 .proccess {
@@ -551,6 +562,9 @@ export default {
   & input {
     margin: 0 0 0 5px !important;
   }
+  @media screen and (max-width: 560px){
+    font-size: 15px;
+  }
 }
 .comments {
   padding: 0 0.777777777777778rem;
@@ -566,6 +580,7 @@ export default {
 .comments__comment-wrap {
   max-height: 25vh;
   overflow-y: auto;
+  margin-top: 5px;
 }
 .comments__comment {
   margin-top: 10px;
@@ -651,10 +666,16 @@ export default {
       font-size: 19px;
       font-weight: 600;
       padding-right: 0;
+      @media screen and (max-width: 560px){
+        font-size: 16px;
+      }
     }
     & span {
       font-size: 16px;
       font-weight: 600;
+      @media screen and (max-width: 560px){
+        font-size: 13px;
+      }
     }
   }
 }
@@ -669,5 +690,8 @@ export default {
   .button {
     font-size: 14px;
   }
+}
+.ui-messageBox__header{
+  align-items: baseline;
 }
 </style>
