@@ -50,7 +50,8 @@ export default {
                             t.payd,
                             t.id,
                             t.user,
-                            key
+                            key,
+                            t.payDate
                         )
                     )
                 })
@@ -101,6 +102,11 @@ export default {
             commit('clearError')
             commit('setLoading', true)
             try {
+                if (payload.payd === true) {
+                    payload.payDate = Date.now()
+                } else {
+                    payload.payDate = 0
+                }
                 const newTask = new Task(
                     payload.status,
                     payload.markerName,
@@ -112,8 +118,10 @@ export default {
                     payload.payd,
                     payload.id,
                     getters.user.id,
-                    payload.keyTask
+                    payload.keyTask,
+                    payload.payDate
                 )
+
 
                 const task = await firebase.database().ref('tasks/' + newTask.key).update({
                     ...newTask

@@ -248,8 +248,10 @@ export default {
         currency: this.currency,
         payd: this.payd,
         id: this.taskId,
-        keyTask: this.keyTask
+        keyTask: this.keyTask,
+        payDate: 0
       };
+
       this.$store.dispatch("editTasks", task);
 
       this.editing = !this.editing;

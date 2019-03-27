@@ -10,7 +10,8 @@ export default class Task {
         payd,
         id,
         user = null,
-        key = ''
+        key = '',
+        payDate = 0
     ) {
         this.status = status
         this.markerName = markerName
@@ -21,7 +22,8 @@ export default class Task {
         this.currency = currency
         this.payd = payd
         this.id = id
-        this.user = user,
-            this.key = key
+        this.user = user
+        this.key = key
+        this.payDate = payDate
     }
 }
