@@ -95,22 +95,29 @@ export default {
         const user = {
           email: this.email,
           password: this.password
-        }
-
-        this.$store.dispatch('registerUser', user)
-          .then( () => {
-            this.submitStatus = 'OK'
-            this.$router.push('/')
+        };
+        // const person = {
+        //   name: "",
+        //   mail: this.email,
+        //   photo: "",
+        //   key: ""
+        // };
+        this.$store
+          .dispatch("registerUser", user)
+          .then(() => {
+            this.submitStatus = "OK";
+            this.$router.push("/");
+            // this.$store.dispatch("newPersons", person);
           })
           .catch(err => {
-            this.submitStatus = err.message
-          })
+            this.submitStatus = err.message;
+          });
       }
     }
   },
   computed: {
-    loading(){
-      return this.$store.getters.loading
+    loading() {
+      return this.$store.getters.loading;
     }
   }
 };
@@ -120,9 +127,9 @@ export default {
 .form {
   padding: 8px;
   max-width: 1170px;
-  width: 60vw; 
+  width: 60vw;
   min-width: 340px;
-  margin: 0 auto;  
+  margin: 0 auto;
 }
 .form-item {
   position: relative;

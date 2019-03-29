@@ -33,22 +33,22 @@
 </template>
 
 <script>
-import LineChart from '../plugins/LineChart.js'
+import LineChart from "../plugins/LineChart.js";
 export default {
   components: {
-      LineChart
-    },
+    LineChart
+  },
   data() {
     return {
       datacollection: null,
-      startRange: 
+      startRange:
         new Date().getFullYear() +
         "-" +
         (new Date().getMonth() <= 9
           ? "0" + (new Date().getMonth() + 1)
           : new Date().getMonth() + 1) +
         "-" +
-        ('01'),
+        "01",
       endRange:
         new Date().getFullYear() +
         "-" +
@@ -59,30 +59,35 @@ export default {
         (new Date().getDate() + 1)
     };
   },
-  mounted () {
-      this.fillData()
-    },
-    methods: {
-      fillData () {
-        this.datacollection = {
-          labels: ['Оплачено', 'Не оплачено'],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: ['#a7c9ad', '#da9393'],
-              data: [this.tasksPay, this.tasksNoPay]
-            }
-          ]
-        }
-      }
-    },
+  mounted() {
+    this.fillData();
+  },
+  methods: {
+    fillData() {
+      this.datacollection = {
+        labels: ["Оплачено", "Не оплачено"],
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: ["#a7c9ad", "#da9393"],
+            data: [this.tasksPay, this.tasksNoPay]
+          }
+        ]
+      };
+    }
+  },
   computed: {
     tasksPay() {
       let cost = 0;
 
       for (let i = 0; i < this.$store.getters.tasks.length; i++) {
         if (this.$store.getters.tasks[i].payd === true) {
-          if ( this.$store.getters.tasks[i].payDate > new Date(this.startRange).getTime() && this.$store.getters.tasks[i].payDate < new Date(this.endRange).getTime() ) {
+          if (
+            this.$store.getters.tasks[i].payDate >
+              new Date(this.startRange).getTime() &&
+            this.$store.getters.tasks[i].payDate <
+              new Date(this.endRange).getTime()
+          ) {
             cost += parseInt(this.$store.getters.tasks[i].cost);
           }
         }
@@ -107,13 +112,13 @@ export default {
 
 <style lang="scss" scoped>
 .small {
-    max-width: 460px;
-    margin:  0 auto;
-    @media screen and (max-width: 560px){
-      max-width: 70vw;
-      width: 70vw;
-    }
+  max-width: 460px;
+  margin: 0 auto;
+  @media screen and (max-width: 560px) {
+    max-width: 70vw;
+    width: 70vw;
   }
+}
 
 .wrap {
   max-width: 900px;
@@ -136,7 +141,7 @@ export default {
   &:hover {
     transform: scale(1.005);
   }
-  @media screen and (max-width: 560px){
+  @media screen and (max-width: 560px) {
     padding: 8px 10px;
   }
 }
@@ -152,14 +157,14 @@ export default {
 .row-title {
   font-weight: 600;
   font-size: 18px;
-  @media screen and (max-width: 560px){
+  @media screen and (max-width: 560px) {
     font-size: 16px;
   }
 }
 .row-cost {
   font-weight: 600;
   font-size: 16px;
-  @media screen and (max-width: 560px){
+  @media screen and (max-width: 560px) {
     font-size: 14px;
   }
   & span {
@@ -186,7 +191,6 @@ export default {
     &:first-child {
       margin-right: 30px;
     }
-    
   }
 }
 .button {

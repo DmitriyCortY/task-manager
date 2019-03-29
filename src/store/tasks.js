@@ -41,8 +41,7 @@ export default {
                     tasksArray.push(
                         new Task(
                             t.status,
-                            t.markerName,
-                            t.markerRole,
+                            t.markerArray,
                             t.title,
                             t.description,
                             t.cost,
@@ -71,8 +70,7 @@ export default {
             try {
                 const newTask = new Task(
                     payload.status,
-                    payload.markerName,
-                    payload.markerRole,
+                    payload.markerArray,
                     payload.title,
                     payload.description,
                     payload.cost,
@@ -109,8 +107,7 @@ export default {
                 }
                 const newTask = new Task(
                     payload.status,
-                    payload.markerName,
-                    payload.markerRole,
+                    payload.markerArray,
                     payload.title,
                     payload.description,
                     payload.cost,

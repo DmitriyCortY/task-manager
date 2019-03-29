@@ -13,8 +13,9 @@
           <div class="card" v-for="task in tasksInProcces" :key="task.id">
             <div class="card__markers">
               <div>
-                <span style="background-color: #0079bf;">{{ task.markerName }}</span>
-                <span style="background-color: #eb5a46;">{{ task.markerRole }}</span>
+                <!-- <span style="background-color: #0079bf;">{{ task.markerName }}</span>
+                <span style="background-color: #eb5a46;">{{ task.markerRole }}</span> -->
+                <span v-for="marker in task.markerArray" :key="marker.key" :style="{backgroundColor: marker.color}">{{marker.str}}</span>
               </div>
               <div style="color: #363636; font-size:18px;">#{{ task.id }}</div>
             </div>
@@ -23,7 +24,7 @@
             <div class="card__description">{{ task.description }}</div>
 
             <div class="card__cost">
-              <div class="icon-edit" @click="taskEdit(task.id, task.title, task.description, task.markerName, task.markerRole, task.cost, task.currency, task.status, task.payd, task.key)">
+              <div class="icon-edit" @click="taskEdit(task.id, task.title, task.description, task.markerArray, task.cost, task.currency, task.status, task.payd, task.key)">
                 <i class="v-icon material-icons theme--light"> create </i>
               </div>
 
@@ -50,10 +51,9 @@
           <div class="card" v-for="task in tasksChecking" :key="task.id">
             <div class="card__markers">
               <div>
-                
-                
-                <span style="background-color: #0079bf;">{{ task.markerName }}</span>
-                <span style="background-color: #eb5a46;">{{ task.markerRole }}</span>
+                <!-- <span style="background-color: #0079bf;">{{ task.markerName }}</span>
+                <span style="background-color: #eb5a46;">{{ task.markerRole }}</span> -->
+                <span v-for="marker in task.markerArray" :key="marker.key" :style="{backgroundColor: marker.color}">{{marker.str}}</span>
               </div>
               <div style="color: #363636; font-size:18px;">#{{ task.id }}</div>
             </div>
@@ -62,7 +62,7 @@
             <div class="card__description">{{ task.description }}</div>
 
             <div class="card__cost">
-              <div class="icon-edit" @click="taskEdit(task.id, task.title, task.description, task.markerName, task.markerRole, task.cost, task.currency, task.status, task.payd, task.key)">
+              <div class="icon-edit" @click="taskEdit(task.id, task.title, task.description, task.markerArray, task.cost, task.currency, task.status, task.payd, task.key)">
                 <i class="v-icon material-icons theme--light"> create </i>
               </div>
 
@@ -89,8 +89,9 @@
           <div class="card" v-for="task in tasksDone" :key="task.id">
             <div class="card__markers">
               <div>
-                <span style="background-color: #0079bf;">{{ task.markerName }}</span>
-                <span style="background-color: #eb5a46;">{{ task.markerRole }}</span>
+                <!-- <span style="background-color: #0079bf;">{{ task.markerName }}</span>
+                <span style="background-color: #eb5a46;">{{ task.markerRole }}</span> -->
+                <span v-for="marker in task.markerArray" :key="marker.key" :style="{backgroundColor: marker.color}">{{marker.str}}</span>
               </div>
               <div style="color: #363636; font-size:18px;">#{{ task.id }}</div>
             </div>
@@ -99,7 +100,7 @@
             <div class="card__description">{{ task.description }}</div>
 
            <div class="card__cost">
-              <div class="icon-edit" @click="taskEdit(task.id, task.title, task.description, task.markerName, task.markerRole, task.cost, task.currency, task.status, task.payd, task.key)">
+              <div class="icon-edit" @click="taskEdit(task.id, task.title, task.description, task.markerArray, task.cost, task.currency, task.status, task.payd, task.key)">
                 <i class="v-icon material-icons theme--light"> create </i>
               </div>
 
@@ -131,13 +132,14 @@
 
         <div class="ui-messageBox__content">
           <div class="markers">
-            <input style="background-color: #0079bf;" class="marker" type="text" v-model="markerName">
-            <input style="background-color: #eb5a46;" class="marker" type="text" v-model="markerRole">
+            <!-- <input style="background-color: #0079bf;" class="marker" type="text">
+            <input style="background-color: #eb5a46;" class="marker" type="text"> -->
+            <input type="text" class="marker-edit marker" v-for="marker in markerArray" :key="marker.key" :style="{backgroundColor: marker.color}" v-model="marker.str">
           </div>
           <div class="flex-row">
             <input class="title" type="text" v-model="titleEditing">
             <div>
-              <input type="number"  v-model="cost">
+              <input type="number" class="cost-input" v-model="cost">
               <span>{{ currency }}</span>
             </div>
           </div>
@@ -179,8 +181,7 @@ export default {
       titleEditing: "",
       descEditing: "",
       taskId: null,
-      markerName: "",
-      markerRole: "",
+      markerArray: {},
       cost: "",
       currency: "",
       status: "",
@@ -199,8 +200,7 @@ export default {
       id,
       title,
       description,
-      markerName,
-      markerRole,
+      markerArray,
       cost,
       currency,
       status,
@@ -212,8 +212,7 @@ export default {
       this.titleEditing = title;
       this.descEditing = description;
       this.taskId = id;
-      this.markerName = markerName;
-      this.markerRole = markerRole;
+      this.markerArray = markerArray;
       this.cost = cost;
       this.currency = currency;
       this.status = status;
@@ -227,8 +226,7 @@ export default {
       this.titleEditing = "";
       this.descEditing = "";
       this.taskId = null;
-      this.markerName = "";
-      this.markerRole = "";
+      this.markerArray = {};
       this.cost = "";
       this.currency = "";
       this.status = "";
@@ -240,8 +238,7 @@ export default {
     finishTaskEdit() {
       const task = {
         status: this.status,
-        markerName: this.markerName,
-        markerRole: this.markerRole,
+        markerArray: this.markerArray,
         title: this.titleEditing,
         description: this.descEditing,
         cost: this.cost,
@@ -260,8 +257,7 @@ export default {
       this.titleEditing = "";
       this.descEditing = "";
       this.taskId = null;
-      this.markerName = "";
-      this.markerRole = "";
+      this.markerArray = {};
       this.cost = "";
       this.currency = "";
       this.status = "";
@@ -507,7 +503,7 @@ export default {
   font-size: 22px !important;
   font-weight: 700;
   margin-bottom: 0 !important;
-  @media screen and (max-width: 560px){
+  @media screen and (max-width: 560px) {
     font-size: 18px !important;
   }
 }
@@ -515,7 +511,7 @@ export default {
   font-size: 18px !important;
   font-weight: 400;
   margin-bottom: 0 !important;
-  @media screen and (max-width: 560px){
+  @media screen and (max-width: 560px) {
     font-size: 14px !important;
     margin-top: -5px;
   }
@@ -537,12 +533,12 @@ export default {
   margin-right: 5px;
   user-select: none;
   text-align: center;
-  width: 75px;
+  width: calc(75px + 10%);
   margin-bottom: 0;
   &:last-child {
     margin-right: 0;
   }
-  @media screen and (max-width: 560px){
+  @media screen and (max-width: 560px) {
     width: 100%;
   }
 }
@@ -562,7 +558,7 @@ export default {
   & input {
     margin: 0 0 0 5px !important;
   }
-  @media screen and (max-width: 560px){
+  @media screen and (max-width: 560px) {
     font-size: 15px;
   }
 }
@@ -666,14 +662,14 @@ export default {
       font-size: 19px;
       font-weight: 600;
       padding-right: 0;
-      @media screen and (max-width: 560px){
+      @media screen and (max-width: 560px) {
         font-size: 16px;
       }
     }
     & span {
       font-size: 16px;
       font-weight: 600;
-      @media screen and (max-width: 560px){
+      @media screen and (max-width: 560px) {
         font-size: 13px;
       }
     }
@@ -691,7 +687,19 @@ export default {
     font-size: 14px;
   }
 }
-.ui-messageBox__header{
+.ui-messageBox__header {
   align-items: baseline;
+}
+.marker-edit {
+  color: #fdfdfd;
+  border-radius: 3px;
+  font-size: 12px;
+  padding: 3px 5px;
+  margin-right: 3px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.cost-input {
+  width: 75px;
 }
 </style>

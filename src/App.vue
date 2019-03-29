@@ -40,7 +40,12 @@
         </v-list-tile>
       </div>
 
-      <router-link v-if="this.$store.state.user.user !== null" to="/personal-area">{{ this.$store.state.user.userMail }}</router-link>
+      <router-link v-if="this.$store.state.user.user !== null" to="/personal-area">
+        <div class="user-photo-wrap">
+          <div :style="{'background-image': 'url(' + authUser.photo + ')'}" class="user-photo"></div>
+          <div>{{ authUser.name != '' ? authUser.name : this.$store.state.user.userMail }}</div>
+        </div>
+      </router-link>
     </v-toolbar>
 
     <v-content>
@@ -72,10 +77,17 @@ export default {
   },
   methods: {},
   computed: {
-    // redirection() {
-    //   if (this.$store.getters.checkUser) {
-    //   }
-    // }
+    authUser() {
+      let authUser = [];
+      for (let i = 0; i < this.$store.getters.persona.length; i++) {
+        if (
+          this.$store.getters.persona[i].key === this.$store.getters.user.id
+        ) {
+          authUser = this.$store.getters.persona[i];
+        }
+      }
+      return authUser;
+    }
   }
 };
 </script>
@@ -88,16 +100,31 @@ export default {
   }
 }
 ::-webkit-scrollbar {
-  @media screen and (min-width: 560px){
-  width: 5px;
-  height: 5px;
-  background-color: #ededed;
+  @media screen and (min-width: 560px) {
+    width: 5px;
+    height: 5px;
+    background-color: #ededed;
   }
 }
 ::-webkit-scrollbar-thumb {
-  @media screen and (min-width: 560px){
+  @media screen and (min-width: 560px) {
     background: #666;
   }
+}
+.user-photo {
+  width: 35px;
+  height: 35px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.user-photo-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>
 

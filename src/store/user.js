@@ -1,6 +1,8 @@
 import firebase from 'firebase/app'
 import User from './user_help'
 
+import store from './store.js'
+
 export default {
     state: {
         user: null,
@@ -26,8 +28,16 @@ export default {
             commit('setLoading', true)
             try {
                 const user = await firebase.auth().createUserWithEmailAndPassword(email, password)
-                commit('setUser', new User(user.user.uid))
+                const UserId = new User(user.user.uid)
+                commit('setUser', UserId)
                 commit('setUserMail', email)
+                store.dispatch('newPersons', {
+                    name: '',
+                    mail: email,
+                    photo: '',
+                    key: UserId.id
+                })
+
 
                 commit('setLoading', false)
             } catch (error) {

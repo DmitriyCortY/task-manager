@@ -1,8 +1,7 @@
 export default class Task {
     constructor(
         status,
-        markerName,
-        markerRole,
+        markerArray = [],
         title,
         description,
         cost,
@@ -14,8 +13,7 @@ export default class Task {
         payDate = 0
     ) {
         this.status = status
-        this.markerName = markerName
-        this.markerRole = markerRole
+        this.markerArray = markerArray
         this.title = title
         this.description = description
         this.cost = cost
