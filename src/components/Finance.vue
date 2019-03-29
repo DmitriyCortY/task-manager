@@ -28,13 +28,12 @@
         <input v-model="endRange" type="date">
       </div>
     </div>
-
     
   </div>
 </template>
 
 <script>
-import LineChart from '../store/LineChart.js'
+import LineChart from '../plugins/LineChart.js'
 export default {
   components: {
       LineChart
@@ -42,11 +41,18 @@ export default {
   data() {
     return {
       datacollection: null,
-      startRange: "2019-01-01",
+      startRange: 
+        new Date().getFullYear() +
+        "-" +
+        (new Date().getMonth() <= 9
+          ? "0" + (new Date().getMonth() + 1)
+          : new Date().getMonth() + 1) +
+        "-" +
+        ('01'),
       endRange:
         new Date().getFullYear() +
         "-" +
-        (new Date().getMonth() < 8
+        (new Date().getMonth() <= 9
           ? "0" + (new Date().getMonth() + 1)
           : new Date().getMonth() + 1) +
         "-" +
@@ -72,17 +78,11 @@ export default {
     },
   computed: {
     tasksPay() {
-      let tasks = this.$store.getters.tasks;
       let cost = 0;
 
-      for (let i = 0; i < tasks.length; i++) {
+      for (let i = 0; i < this.$store.getters.tasks.length; i++) {
         if (this.$store.getters.tasks[i].payd === true) {
-          if (
-            this.$store.getters.tasks[i].payDate >
-              new Date(this.startRange).getTime() &&
-            this.$store.getters.tasks[i].payDate <
-              new Date(this.endRange).getTime()
-          ) {
+          if ( this.$store.getters.tasks[i].payDate > new Date(this.startRange).getTime() && this.$store.getters.tasks[i].payDate < new Date(this.endRange).getTime() ) {
             cost += parseInt(this.$store.getters.tasks[i].cost);
           }
         }

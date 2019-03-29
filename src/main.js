@@ -40,6 +40,7 @@ new Vue({
       }
       this.$store.dispatch('loadTasks')
       this.$store.dispatch('loadComments')
+      this.$store.dispatch('loadMarkers')
     })
   },
   render: h => h(App)

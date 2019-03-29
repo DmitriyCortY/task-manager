@@ -102,7 +102,7 @@ export default {
             commit('clearError')
             commit('setLoading', true)
             try {
-                if (payload.payd === true) {
+                if (payload.payd === true && payload.payDate === 0) {
                     payload.payDate = Date.now()
                 } else {
                     payload.payDate = 0
@@ -123,7 +123,7 @@ export default {
                 )
 
 
-                const task = await firebase.database().ref('tasks/' + newTask.key).update({
+                await firebase.database().ref('tasks/' + newTask.key).update({
                     ...newTask
                 })
                 commit('editTasks', {

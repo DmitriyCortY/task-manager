@@ -49,6 +49,7 @@
 
 <script>
 import { required, email, minLength } from "vuelidate/lib/validators";
+import router from '../router'
 export default {
   data() {
     return {
@@ -85,7 +86,7 @@ export default {
           .dispatch("loginUser", user)
           .then(() => {
             this.submitStatus = "OK";
-            this.$router.push("/projects");
+            router.push("/projects");
           })
           .catch(err => {
             this.submitStatus = err.message;
@@ -95,7 +96,7 @@ export default {
   },
   computed: {
     loading() {
-      this.$router.push("/projects");
+      router.push("/projects");
       return this.$store.getters.loading;
     }
   }
