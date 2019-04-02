@@ -67,6 +67,7 @@ export default {
             commit('clearError')
             commit('setLoading', true)
 
+
             try {
                 const newTask = new Task(
                     payload.status,
@@ -80,11 +81,13 @@ export default {
                     getters.user.id
                 )
 
-                const task = firebase.database().ref('tasks').push(newTask)
+                const task = await firebase.database().ref('tasks').push(newTask)
 
-                firebase.database().ref('tasks/' + task.key).update({
+
+                await firebase.database().ref('tasks/' + task.key).update({
                     key: task.key
                 })
+
                 commit('newTask', {
                     ...newTask,
                     // key: task.key
@@ -120,7 +123,7 @@ export default {
                 )
 
 
-                await firebase.database().ref('tasks/' + newTask.key).update({
+                await firebase.database().ref('tasks/' + payload.keyTask).update({
                     ...newTask
                 })
                 commit('editTasks', {

@@ -1,9 +1,10 @@
 <template>
   <div class="wrapper-tasks">
     <div class="row-flex">
-      <div>
-        <label @click="openList">Выбор маркера &#9660;: 
-          <span class="checked-marker" v-for="elem in markerArray" :key="elem.key"  :style="{backgroundColor: elem.color}">
+      <div style="width: calc(100% - 50px)">
+        <label >
+          <span @click="openList">Выбор маркера &#9660;: </span>
+          <span class="checked-marker" @click="toggleCheckMarker(elem.str, elem.color)" v-for="elem in markerArray" :key="elem.key"  :style="{backgroundColor: elem.color}">
             {{elem.str}}
           </span>
         </label>
@@ -173,7 +174,13 @@ export default {
   },
   computed: {
     getMarkers() {
-      return this.$store.getters.markers;
+      let array = this.$store.getters.markers;
+      function sortedArray(element) {
+        if (element.prefix === ".") return -1;
+        if (element.prefix === "@") return 0;
+        if (element.prefix === "#") return 1;
+      }
+      return array.sort(sortedArray);
     }
   }
 };
@@ -266,6 +273,10 @@ button {
   max-width: 150px;
   min-width: 150px;
   user-select: none;
+  @media screen and (max-width: 560px) {
+    max-width: 100%;
+    width: 75%;
+  }
   & li {
     user-select: none;
     margin: 5px auto;
@@ -289,12 +300,22 @@ button {
   display: block;
 }
 .checked-marker {
+  display: inline-block;
   padding: 4px 10px;
   border-radius: 3px;
   color: #ffffff;
   font-weight: 500;
   margin-right: 6px;
+  margin-bottom: 6px;
   font-size: 14px;
+  @media screen and (max-width: 560px) {
+    padding: 3px 6px;
+    border-radius: 2px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    line-height: 13px;
+  }
 }
 </style>
 

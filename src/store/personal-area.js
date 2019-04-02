@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 import PesonalArea from './_personal-area_help'
-import _user from './user'
+// import _user from './user'
 
 export default {
     state: {
@@ -13,9 +13,14 @@ export default {
         loadPersons(state, payload) {
             state.persona = payload
         },
-        // editPersons(state, payload){
-
-        // }
+        editPersons(state, payload) {
+            for (let i = 0; i < state.persona.length; i++) {
+                if (state.persona[i].key == payload.key) {
+                    state.persona[i].name = payload.name
+                    state.persona[i].photo = payload.photo
+                }
+            }
+        }
     },
     actions: {
         async newPersons({ commit }, payload) {
@@ -30,7 +35,7 @@ export default {
                     payload.key
                 )
 
-                await firebase.database().ref('users').push(newPerson)
+                await firebase.database().ref('users/' + payload.key).push(newPerson)
 
                 // commit('newPersons', {
                 //     ...newPerson
@@ -75,17 +80,17 @@ export default {
             commit('setLoading', true)
 
 
-            let userKey = _user.getters.user
+            // let userKey = _user.getters.user.id
 
             try {
                 const newPerson = new PesonalArea(
                     payload.name,
                     payload.mail,
                     payload.photo,
-                    userKey,
+                    payload.key,
                 )
 
-                await firebase.database().ref('users/').update({
+                await firebase.database().ref('users/' + payload.key).update({
                     ...newPerson
                 })
                 commit('editPersons', {

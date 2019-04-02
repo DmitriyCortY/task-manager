@@ -24,8 +24,8 @@
       </div>
 
       <div class="range">
-        <input v-model="startRange" type="date">
-        <input v-model="endRange" type="date">
+        <input v-model="startRange" @change="fillData" type="date">
+        <input v-model="endRange" @change="fillData" type="date">
       </div>
     </div>
     
@@ -40,7 +40,16 @@ export default {
   },
   data() {
     return {
-      datacollection: null,
+      datacollection: {
+        labels: [],
+        datasets: [
+          {
+            label: "",
+            backgroundColor: [],
+            data: []
+          }
+        ]
+      },
       startRange:
         new Date().getFullYear() +
         "-" +
@@ -56,7 +65,9 @@ export default {
           ? "0" + (new Date().getMonth() + 1)
           : new Date().getMonth() + 1) +
         "-" +
-        (new Date().getDate() + 1)
+        (new Date().getDate() <= 9
+          ? "0" + (new Date().getDate() + 1)
+          : new Date().getDate() + 1)
     };
   },
   mounted() {
