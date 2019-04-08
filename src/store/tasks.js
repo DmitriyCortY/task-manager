@@ -14,10 +14,9 @@ export default {
             state.tasks = payload
         },
         editTasks(state, payload) {
-
             Object.keys(payload).forEach(key => {
-
-                state.tasks[payload.id - 1][key] = payload[key]
+                const t = payload[key]
+                state.tasks[payload.id][key] = t
             })
         },
         setError(state, payload) {
@@ -121,11 +120,10 @@ export default {
                     payload.keyTask,
                     payload.payDate
                 )
-
-
                 await firebase.database().ref('tasks/' + payload.keyTask).update({
                     ...newTask
                 })
+
                 commit('editTasks', {
                     ...newTask
                 })

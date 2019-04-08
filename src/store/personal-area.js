@@ -90,6 +90,11 @@ export default {
                     payload.key,
                 )
 
+                // let timestamp = Number(new Date())
+                // let storageRef = firebase.storage().ref(timestamp.toString())
+                // storageRef.put(payload.photo);
+
+
                 await firebase.database().ref('users/' + payload.key).update({
                     ...newPerson
                 })
