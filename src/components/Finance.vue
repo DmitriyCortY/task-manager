@@ -23,6 +23,12 @@
         <div class="row-cost">{{ tasksNoPay }}<span> грн</span></div>
       </div>
 
+      <div class="row row-nopayd">
+        <div class="row-title">Не оплачено ( готово )</div>
+
+        <div class="row-cost">{{ tasksNoPayDone }}<span> грн</span></div>
+      </div>
+
       <div class="range">
         <input v-model="startRange" @change="fillData" type="date">
         <input v-model="endRange" @change="fillData" type="date">
@@ -111,6 +117,20 @@ export default {
 
       for (let i = 0; i < tasks.length; i++) {
         if (this.$store.getters.tasks[i].payd === false) {
+          cost += parseInt(this.$store.getters.tasks[i].cost);
+        }
+      }
+      return cost;
+    },
+    tasksNoPayDone() {
+      let tasks = this.$store.getters.tasks;
+      let cost = 0;
+
+      for (let i = 0; i < tasks.length; i++) {
+        if (
+          this.$store.getters.tasks[i].payd === false &&
+          this.$store.getters.tasks[i].status === "done"
+        ) {
           cost += parseInt(this.$store.getters.tasks[i].cost);
         }
       }

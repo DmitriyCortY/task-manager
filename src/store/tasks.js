@@ -89,7 +89,7 @@ export default {
 
                 commit('newTask', {
                     ...newTask,
-                    // key: task.key
+                    key: task.key
                 })
 
                 commit('setLoading', false)
